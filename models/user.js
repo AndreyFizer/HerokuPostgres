@@ -11,13 +11,21 @@ module.exports = function (sequelize) {
     var options;
 
     var columns = {
-        email   : {type: Sequelize.STRING},
+        email   : {
+            type    : Sequelize.STRING,
+            validate: {
+                isEmail: {
+                    msg: "Ololololo - bad email :("
+                }
+            }
+        },
         password: {type: Sequelize.STRING},
         status  : {type: Sequelize.INTEGER}
     };
 
     options = {
         timestamps : true,
+        //paranoid   : true,
         underscored: true
     };
 

@@ -7,8 +7,10 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var Models = require('./models');
-
+var Sequelize = require('sequelize');
 var app = express();
+var sequelize;
+var httpServer;
 
 if (!process.env.NODE_ENV) {
     process.env.NODE_ENV = 'development';
@@ -19,15 +21,13 @@ if (process.env.NODE_ENV === 'development') {
     require('./config/development');
 }
 
-var Sequelize = require('sequelize');
-var sequelize = new Sequelize('postgres://gdxjhecgoheebi:DegR8QuZsKz8vgZkXlR6xHsDgX@ec2-107-22-170-249.compute-1.amazonaws.com:5432/dc87cfltq484jf', {
+sequelize = new Sequelize('postgres://gdxjhecgoheebi:DegR8QuZsKz8vgZkXlR6xHsDgX@ec2-107-22-170-249.compute-1.amazonaws.com:5432/dc87cfltq484jf', {
     dialectOptions: {
         ssl: true
     }
-    // Look to the next section for possible options
 });
 
-//var sequelize = new Sequelize(
+//sequelize = new Sequelize(
 //    process.env.DATABASE,
 //    process.env.RDS_USERNAME,
 //    process.env.RDS_PASSWORD, {
@@ -44,18 +44,14 @@ var sequelize = new Sequelize('postgres://gdxjhecgoheebi:DegR8QuZsKz8vgZkXlR6xHs
 app.set('sequelize', sequelize);
 sequelize.Models = new Models(sequelize);
 
-var httpServer = http.createServer(app);
+httpServer = http.createServer(app);
 app.set('port', process.env.PORT || '8821');
-
-app.use(express.static(__dirname + '/public'));
-app.set('views', __dirname + '/public/static');
-app.set('view engine', 'html');
 
 app.use(logger('dev'));
 app.use(bodyParser.urlencoded({extended: false, limit: 1024 * 1024 * 5}));
 app.use(bodyParser.json({limit: 1024 * 1024 * 5}));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
+//app.use(express.static(path.join(__dirname, 'public')));
 
 require('./routes/index')(app);
 

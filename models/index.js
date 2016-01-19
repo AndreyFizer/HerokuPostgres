@@ -4,19 +4,18 @@
 
 "use strict";
 
-var M = require('../constants/models');
+var MODELS = require('../constants/models');
 
 var Models = function (sequelize) {
-    var User;
-    var Profile;
 
-    User = this[M.USER] = require('./user')(sequelize);
-    Profile = this[M.PROFILE] = require('./profile')(sequelize);
+    this[MODELS.USER] = require('./user')(sequelize);
+    this[MODELS.PROFILE] = require('./profile')(sequelize);
 
-    Profile.belongsTo(User);
-    User.hasOne(Profile);
+    this[MODELS.PROFILE].belongsTo( this[MODELS.USER]);
+    this[MODELS.USER].hasOne(this[MODELS.PROFILE]);
 
-    //sequelize.sync({force : true});
+    sequelize.sync({force : true});
+    //sequelize.sync();
 };
 
 module.exports = Models;

@@ -7,3 +7,11 @@ process.env.RDS_USERNAME = 'gdxjhecgoheebi';
 process.env.RDS_PASSWORD = ' DegR8QuZsKz8vgZkXlR6xHsDgX';
 process.env.RDS_PORT = 5432;
 process.env.DATABASE = 'dc87cfltq484jf';
+
+//process.env.HOST = 'http://localhost:8821';
+//process.env.PORT = '8821';
+//process.env.RDS_HOSTNAME = 'localhost';
+//process.env.RDS_USERNAME = 'postgres';
+//process.env.RDS_PASSWORD = 'postgres';
+//process.env.RDS_PORT = 5432;
+//process.env.DATABASE = 'sequelizeDB';
